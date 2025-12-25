@@ -8,6 +8,9 @@ require (
 	cloud.google.com/go/storage v1.55.0
 	github.com/NYTimes/gziphandler v1.1.1
 	github.com/PuerkitoBio/goquery v1.9.3
+	// Use Alauda-maintained archiver fork (upstream github.com/mholt/archiver/v3) that bumps
+	// github.com/nwaples/rardecode to v2 and includes upstream RAR-related fixes.
+	github.com/alauda/archiver/v3 v3.5.3-alauda
 	github.com/ckaznocha/protoc-gen-lint v0.3.0
 	github.com/containers/image/v5 v5.35.0
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
@@ -28,7 +31,6 @@ require (
 	github.com/knqyf263/go-rpm-version v0.0.0-20220614171824-631e686d1075
 	github.com/lib/pq v1.10.9
 	github.com/mailru/easyjson v0.9.0
-	github.com/mholt/archiver/v3 v3.5.1
 	github.com/mitchellh/hashstructure/v2 v2.0.2
 	github.com/opencontainers/go-digest v1.0.0
 	github.com/pborman/uuid v1.2.1
@@ -71,7 +73,7 @@ require (
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.51.0 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/ProtonMail/go-crypto v1.1.6 // indirect
-	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -130,12 +132,12 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/nwaples/rardecode v1.1.0 // indirect
+	github.com/nwaples/rardecode/v2 v2.2.2 // indirect
 	github.com/opencontainers/image-spec v1.1.1 // indirect
 	github.com/openshift/api v0.0.0-20231117201702-2ea16bbab164 // indirect
 	github.com/openshift/client-go v0.0.0-20230926161409-848405da69e1 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
-	github.com/pierrec/lz4/v4 v4.1.15 // indirect
+	github.com/pierrec/lz4/v4 v4.1.21 // indirect
 	github.com/pjbgf/sha1cd v0.3.2 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
@@ -185,7 +187,7 @@ require (
 	k8s.io/klog/v2 v2.120.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20240105020646-a37d4de58910 // indirect
 	k8s.io/utils v0.0.0-20240102154912-e7106e64919e // indirect
-	nhooyr.io/websocket v1.8.11 // indirect
+	nhooyr.io/websocket v1.8.17 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
@@ -198,19 +200,6 @@ replace (
 	github.com/facebookincubator/nvdtools => github.com/stackrox/nvdtools v0.0.0-20231111002313-57e262e4797e
 
 	github.com/heroku/docker-registry-client => github.com/stackrox/docker-registry-client v0.2.1
-
-	// The current latest version of github.com/mholt/archiver/v3 (v3.5.1) suffers from CVE-2024-0406.
-	// There is currently a PR in place to resolve it (https://github.com/mholt/archiver/pull/396),
-	// but it has not had much attention recently.
-	// Just replace our usage of github.com/mholt/archiver/v3 with github.com/anchore/archiver/v3 (v3.5.2)
-	// so static vulnerability scanners will be happy.
-	// This version (probably) fixes CVE-2024-0406, but we are also unaffected by that vulnerability anyway,
-	// as we do not use [(*archiver.Tar).Unarchive()], so it doesn't really matter.
-	// What is important, though, is the code changes between github.com/mholt/archiver/v3 v3.5.1
-	// and github.com/anchore/archiver/v3 v3.5.2 only touch the [(*archiver.Tar).Unarchive()] path,
-	// and nothing we use. See https://github.com/mholt/archiver/compare/v3.5.1...anchore:archiver:v3.5.2
-	// for more details of the exact difference.
-	github.com/mholt/archiver/v3 => github.com/anchore/archiver/v3 v3.5.2
 
 	github.com/operator-framework/helm-operator-plugins => github.com/stackrox/helm-operator v0.0.12-0.20230825152000-1361e2f7db46
 	github.com/stackrox/rox => github.com/stackrox/stackrox v0.0.0-20240723082904-cdfb007fd7e9
